@@ -37,4 +37,5 @@ npm start
 ## Lưu dữ liệu
 
 - Local: dữ liệu lưu trong `du-an-moi/data.json`
-- Render: nên dùng persistent disk và mount vào thư mục dữ liệu để tránh mất dữ liệu sau mỗi lần redeploy
+- Render free: dữ liệu có thể bị mất sau mỗi lần redeploy hoặc khi service khởi động lại
+- Nếu cần dùng ổn định lâu dài, nên nâng cấp sang gói có persistent disk hoặc chuyển sang database thật

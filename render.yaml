@@ -2,7 +2,7 @@ services:
   - type: web
     name: workshop-attendance
     runtime: node
-    plan: starter
+    plan: free
     buildCommand: cd du-an-moi && npm install
     startCommand: cd du-an-moi && npm start
     autoDeployTrigger: commit
@@ -14,8 +14,3 @@ services:
         value: 10000
       - key: HOST
         value: 0.0.0.0
-      - key: DATA_DIR
-        value: /var/data
-    disk:
-      name: attendance-data
-      mountPath: /var/data
