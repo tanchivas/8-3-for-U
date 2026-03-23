@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ thống chấm công xưởng</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <section class="auth-screen" id="authScreen">
+      <div class="auth-copy">
+        <p class="eyebrow">Workshop Attendance</p>
+        <h1>Hệ thống chấm công cho xưởng sản xuất.</h1>
+        <p class="lead">
+          Đăng nhập bằng tài khoản quản lý hoặc công nhân để ghi nhận check-in, check-out và theo dõi bảng công.
+        </p>
+        <div class="auth-note">
+          <p>Tài khoản mẫu</p>
+          <ul>
+            <li>Quản lý: <strong>admin</strong> / <strong>123456</strong></li>
+            <li>Công nhân: <strong>cn01</strong> / <strong>123456</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <form class="auth-card" id="loginForm">
+        <div>
+          <p class="eyebrow">Đăng nhập</p>
+          <h2>Bắt đầu ca làm</h2>
+        </div>
+
+        <label>
+          <span>Tài khoản</span>
+          <input id="usernameInput" type="text" autocomplete="username" required>
+        </label>
+
+        <label>
+          <span>Mật khẩu</span>
+          <input id="passwordInput" type="password" autocomplete="current-password" required>
+        </label>
+
+        <button type="submit" class="primary">Đăng nhập</button>
+        <p class="form-message" id="loginMessage"></p>
+      </form>
+    </section>
+
+    <section class="app-screen hidden" id="appScreen">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Chấm công nội bộ</p>
+          <h2 id="appTitle">Bảng điều khiển</h2>
+        </div>
+        <div class="topbar-actions">
+          <div class="user-chip">
+            <span id="currentUserName">--</span>
+            <small id="currentUserRole">--</small>
+          </div>
+          <button type="button" class="ghost" id="logoutButton">Đăng xuất</button>
+        </div>
+      </header>
+
+      <main class="app-grid">
+        <section class="manager-view hidden" id="managerView">
+          <div class="panel hero-panel">
+            <div>
+              <p class="panel-kicker">Tổng quan</p>
+              <h3>Điều hành chấm công theo ngày</h3>
+            </div>
+            <div class="date-box" id="todayLabel">--</div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Chỉ số hôm nay</p>
+                <h3>Tiến độ trong ca</h3>
+              </div>
+            </div>
+            <div class="stats" id="statsGrid"></div>
+          </div>
+
+          <div class="panel two-col">
+            <section>
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">Nhân sự</p>
+                  <h3 id="workerFormTitle">Thêm công nhân</h3>
+                </div>
+              </div>
+              <form id="workerForm" class="stack-form">
+                <input id="workerIdInput" type="hidden">
+                <label>
+                  <span>Họ tên</span>
+                  <input id="workerNameInput" type="text" required>
+                </label>
+                <label>
+                  <span>Tài khoản</span>
+                  <input id="workerUsernameInput" type="text" required>
+                </label>
+                <label>
+                  <span>Mật khẩu</span>
+                  <input id="workerPasswordInput" type="text" required>
+                </label>
+                <div class="toolbar">
+                  <button type="submit" class="primary" id="workerSubmitButton">Thêm công nhân</button>
+                  <button type="button" class="ghost" id="resetWorkerFormButton">Làm mới</button>
+                </div>
+                <p class="form-message" id="workerMessage"></p>
+              </form>
+            </section>
+
+            <section>
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">Danh sách</p>
+                  <h3>Công nhân hiện có</h3>
+                </div>
+              </div>
+              <div class="worker-list" id="workerList"></div>
+            </section>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Chấm công thủ công</p>
+                <h3 id="attendanceFormTitle">Thêm hoặc sửa bản ghi</h3>
+              </div>
+            </div>
+            <form id="attendanceForm" class="stack-form attendance-editor">
+              <input id="attendanceRecordIdInput" type="hidden">
+              <div class="editor-grid">
+                <label>
+                  <span>Công nhân</span>
+                  <select id="attendanceWorkerInput" required></select>
+                </label>
+                <label>
+                  <span>Ngày</span>
+                  <input id="attendanceDateInput" type="date" required>
+                </label>
+                <label>
+                  <span>Giờ vào</span>
+                  <input id="attendanceCheckInInput" type="time">
+                </label>
+                <label>
+                  <span>Giờ ra</span>
+                  <input id="attendanceCheckOutInput" type="time">
+                </label>
+              </div>
+              <div class="toolbar">
+                <button type="submit" class="primary" id="attendanceSubmitButton">Lưu bản ghi</button>
+                <button type="button" class="ghost" id="resetAttendanceFormButton">Làm mới</button>
+              </div>
+              <p class="form-message" id="attendanceMessage"></p>
+            </form>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header wide">
+              <div>
+                <p class="panel-kicker">Bảng công ngày</p>
+                <h3>Lọc, sửa và xuất dữ liệu</h3>
+              </div>
+              <div class="toolbar">
+                <input id="managerDateInput" type="date">
+                <select id="managerWorkerFilter">
+                  <option value="">Tất cả công nhân</option>
+                </select>
+                <button type="button" class="ghost" id="refreshRecordsButton">Tải lại</button>
+                <button type="button" class="primary" id="exportButton">Xuất CSV ngày</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ngày</th>
+                    <th>Công nhân</th>
+                    <th>Tài khoản</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="managerAttendanceTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header wide">
+              <div>
+                <p class="panel-kicker">Bảng công tháng</p>
+                <h3>Theo dõi toàn bộ ngày trong tháng</h3>
+              </div>
+              <div class="toolbar">
+                <input id="managerMonthInput" type="month">
+                <button type="button" class="ghost" id="refreshMonthButton">Tải bảng tháng</button>
+                <button type="button" class="primary" id="exportMonthButton">Xuất CSV tháng</button>
+              </div>
+            </div>
+            <div class="table-wrap monthly-wrap">
+              <table class="monthly-table">
+                <thead id="monthlyAttendanceHead"></thead>
+                <tbody id="monthlyAttendanceTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="worker-view hidden" id="workerView">
+          <div class="panel hero-panel">
+            <div>
+              <p class="panel-kicker">Ca làm hiện tại</p>
+              <h3 id="workerGreeting">Xin chào</h3>
+              <p class="lead compact">Công nhân có thể tự check-in và check-out ngay trên máy này.</p>
+            </div>
+            <div class="date-box" id="workerDateLabel">--</div>
+          </div>
+
+          <div class="panel action-panel">
+            <button type="button" class="primary large" id="checkInButton">Check-in</button>
+            <button type="button" class="ghost large" id="checkOutButton">Check-out</button>
+            <p class="form-message" id="workerActionMessage"></p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Trạng thái hôm nay</p>
+                <h3>Bản ghi của bạn</h3>
+              </div>
+            </div>
+            <div class="stats worker-stats" id="workerStats"></div>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <template id="workerCardTemplate">
+    <article class="worker-card">
+      <div>
+        <h4 class="worker-name"></h4>
+        <p class="worker-meta"></p>
+      </div>
+      <div class="worker-actions">
+        <button type="button" class="ghost small worker-edit">Sửa</button>
+        <button type="button" class="ghost small worker-delete danger-button">Xóa</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="./script.js"></script>
+</body>
+</html>

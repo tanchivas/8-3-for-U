@@ -1,0 +1,13 @@
+{
+  "name": "workshop-attendance",
+  "version": "1.0.0",
+  "private": true,
+  "description": "He thong cham cong cho xuong san xuat",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

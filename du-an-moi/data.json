@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "id": "u-admin",
+      "username": "admin",
+      "password": "123456",
+      "name": "Quản Lý Xưởng",
+      "role": "manager"
+    },
+    {
+      "id": "u-cn01",
+      "username": "hieu01",
+      "password": "123456",
+      "name": "Anh Hiếu",
+      "role": "worker"
+    },
+    {
+      "id": "u-cn02",
+      "username": "thanh01",
+      "password": "123456",
+      "name": "Anh Thành",
+      "role": "worker"
+    },
+    {
+      "id": "u-cn03",
+      "username": "long01",
+      "password": "123456",
+      "name": "Anh Long",
+      "role": "worker"
+    }
+  ],
+  "records": []
+}
